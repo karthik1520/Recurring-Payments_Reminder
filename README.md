@@ -28,7 +28,7 @@ Perfect for maintaining financial awareness without stress.
 
 ## 📂 Project Structure
 
-```text
+```
 Recurring-Payments-Reminder/
 │
 ├── reminder.py         # Main Python script (email builder + sender)
@@ -36,9 +36,8 @@ Recurring-Payments-Reminder/
 ├── config.env          # Email credentials (NOT tracked by Git)
 ├── .gitignore          # Ensures config.env is not committed
 └── README.md           # Documentation
+
 🧾 Example payments.json (Your Real Data)
-json
-Copy code
 [
   {
     "name": "Apple Storage",
@@ -76,90 +75,62 @@ Copy code
     "notes": "Subscription fee"
   }
 ]
-🔐 Configuration — config.env
-Create a file named config.env:
+```
 
-text
-Copy code
+## 🔐 Configuration — config.env
+
+Create a file named config.env:
 EMAIL_ADDRESS=your_email@gmail.com
 EMAIL_PASSWORD=your_gmail_app_password
 TO_EMAIL=your_email@gmail.com
-⚠️ Never commit this file.
+**⚠️ Never commit this file.**
 It is automatically ignored via .gitignore.
 
 Creating a Gmail App Password
-Go to Google Account → Security
+- Go to Google Account → Security
+- Enable 2-Step Verification
+- Go to App Passwords → choose Mail
+- Copy the generated App Password into config.env as EMAIL_PASSWORD
 
-Enable 2-Step Verification
+## ▶️ Run the Script Manually
 
-Go to App Passwords → choose Mail
-
-Copy the generated App Password into config.env as EMAIL_PASSWORD
-
-▶️ Run the Script Manually
 Make sure you're inside your project folder, then run:
-
-bash
-Copy code
 python reminder.py
+
 You should receive an HTML email with:
+- ✨ Affirmations
+- 💳 Your payment list
+- 💰 Total monthly amount
+- 🎨 Emojis
 
-✨ Affirmations
 
-💳 Your payment list
+## 🖥️ Automating with Windows Task Scheduler
 
-💰 Total monthly amount
-
-🎨 Emojis
-
-🖥️ Automating with Windows Task Scheduler
-Open Task Scheduler
-
-Create Basic Task → Trigger: Monthly
-
-Set Program/script to:
-
-text
-Copy code
-"C:\Path\To\Python\python.exe"
-Set Add arguments to:
-
-text
-Copy code
-"C:\Path\To\Recurring-Payments-Reminder\reminder.py"
-Start in: (leave empty)
-
-Save → Right-click task → Run
-
-Check your email 🎉
+- Open Task Scheduler
+- Create Basic Task → Trigger: Monthly
+- Set Program/script to:
+      "C:\Path\To\Python\python.exe"
+- Set Add arguments to:
+      "C:\Path\To\Recurring-Payments-Reminder\reminder.py"
+- Start in: (leave empty)
+- Save → Right-click task → Run
+- Check your email 🎉
 
 The script works from Task Scheduler because it loads files relative to its own directory using __file__.
 
-🔧 How It Works (Technical Overview)
-Email formatting is done using HTML + inline CSS
-
-Script pulls payments from payments.json
-
-Builds affirmations + bullet list dynamically
-
-Calculates total outgoing
-
-Sends email using Gmail SMTP (smtplib + SSL)
-
-File paths are resolved via:
-
-python
-Copy code
-base_dir = os.path.dirname(os.path.abspath(__file__))
+## 🔧 How It Works (Technical Overview)
+- Email formatting is done using HTML + inline CSS
+- Script pulls payments from payments.json
+- Builds affirmations + bullet list dynamically
+- Calculates total outgoing
+- Sends email using Gmail SMTP (smtplib + SSL)
+- File paths are resolved via:
+      base_dir = os.path.dirname(os.path.abspath(__file__))
 so Task Scheduler can’t break it by changing the working directory.
 
-🚀 Future Enhancements
-🪟 Full Windows Desktop App (Tkinter / PyQt)
-
-☁️ Cloud Scheduler (Google/AWS) — run even when PC is off
-
-📊 Expense dashboard UI
-
-🔔 Push / Telegram / WhatsApp notifications
-
-🔐 Encrypted password storage
+## 🚀 Future Enhancements
+- 🪟 Full Windows Desktop App (Tkinter / PyQt)
+- ☁️ Cloud Scheduler (Google/AWS) — run even when PC is off
+- 📊 Expense dashboard UI
+- 🔔 Push / Telegram / WhatsApp notifications
+- 🔐 Encrypted password storage
