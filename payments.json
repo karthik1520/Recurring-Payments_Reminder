@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Apple Storage",
+    "amount": 10,
+    "currency": "EUR",
+    "day": 27,
+    "notes": "Need to pay subscription fee of 10 euros. Make sure to have the money in Bank Account"
+  },
+  {
+    "name": "Adobe",
+    "amount": 25,
+    "currency": "EUR",
+    "day": 24,
+    "notes": "Need to pay subscription fee of 25 euros. Make sure to have the money in Bank Account"
+  },
+  {
+    "name": "Mutual Fund",
+    "amount": 60,
+    "currency": "EUR",
+    "day": 2,
+    "notes": "Need to pay for Mutual Fund which is 40 Euros. Make sure to have the money in Bank Account"
+  },
+  {
+    "name": "Gold and Education Loan",
+    "amount": 390,
+    "currency": "EUR",
+    "day": 2,
+    "notes": "Need to pay Education Loan and Gold Scheme money totalling to 350 Euros. Loan sums up to 350 Euros and Gold Scheme is 40 Euros. Make sure to have the money in Bank Account"
+  },
+  {
+    "name": "ChatGPT",
+    "amount": 23,
+    "currency": "EUR",
+    "day": 8,
+    "notes": "Need to pay subscription fee of 23 euros. Make sure to have the money in Bank Account"
+  }
+]
