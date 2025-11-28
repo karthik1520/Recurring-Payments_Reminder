@@ -3,8 +3,9 @@ import smtplib
 import ssl
 import os
 from datetime import datetime
-from email.mime_text import MIMEText
-from email.mime_multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
 
 # ----- Configuration -----
 # Sort mode: "day" (sort by due date) or "amount_desc" (largest amount first)
