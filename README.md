@@ -32,6 +32,7 @@ Perfect for maintaining financial awareness without stress.
 Recurring-Payments-Reminder/
 │
 ├── reminder.py         # Main Python script (email builder + sender)
+├── payments_gui.py     # GUI to manage payments.json
 ├── payments.json       # Recurring payments (editable)
 ├── config.env          # Email credentials (NOT tracked by Git)
 ├── .gitignore          # Ensures config.env is not committed
@@ -103,6 +104,15 @@ You should receive an HTML email with:
 - 💰 Total monthly amount
 - 🎨 Emojis
 
+## 🖥️ Run the Desktop GUI
+
+python payments_gui.py
+
+- Edit payment entries
+- Add new payments
+- Delete unwanted entries
+- Save directly to payments.json
+Window size is fixed so all elements fit neatly.
 
 ## 🖥️ Automating with Windows Task Scheduler
 
@@ -127,6 +137,7 @@ The script works from Task Scheduler because it loads files relative to its own 
 - File paths are resolved via:
       base_dir = os.path.dirname(os.path.abspath(__file__))
 so Task Scheduler can’t break it by changing the working directory.
+- GUI built using Tkinter
 
 ## 🚀 Future Enhancements
 - 🪟 Full Windows Desktop App (Tkinter / PyQt)
@@ -134,3 +145,22 @@ so Task Scheduler can’t break it by changing the working directory.
 - 📊 Expense dashboard UI
 - 🔔 Push / Telegram / WhatsApp notifications
 - 🔐 Encrypted password storage
+
+## 🟦 CHANGES ADDED (FULL DIFF SUMMARY)
+**➕ New features**
+- Sorting support (SORT_MODE)
+- High-value highlighting (🔥 + red color)
+- New GUI app: payments_gui.py
+- Improved layout and GUI sizing
+- Updated README sections
+
+**📝 Modified README sections**
+- Features
+- Project structure
+- Running instructions
+- Technical overview
+- Future enhancements
+
+**➕ New code in reminder.py**
+- sort_payments() function
+- High-value detection logic
