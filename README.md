@@ -1,34 +1,34 @@
-📬 Recurring Payments Reminder — Automated Monthly Email (Python)
+# 📬 Recurring Payments Reminder — Automated Monthly Email (Python)
 
-This project sends a beautiful, HTML-styled monthly reminder email listing all your recurring payments—complete with:
+This project sends a **beautiful, HTML-styled monthly reminder email** listing all your recurring payments—complete with:
 
-✨ Positive Money Affirmations
-🧾 Clean bullet-style payment list
-💳 Due dates, amounts, notes
-💰 Total monthly outgoing
-🎨 Emojis & visually appealing formatting
+- ✨ Positive Money Affirmations  
+- 🧾 Clean bullet-style payment list  
+- 💳 Due dates, amounts, notes  
+- 💰 Total monthly outgoing  
+- 🎨 Emojis & visually appealing formatting  
 
-The script can run automatically every month using Windows Task Scheduler.
+The script can run automatically every month using **Windows Task Scheduler**.
 
 Perfect for maintaining financial awareness without stress.
 
-✨ Features
+---
 
-🔔 Automatic Monthly Email Reminder
+## ✨ Features
 
-💌 Beautiful HTML-formatted email (affirmations + emojis)
+- 🔔 **Automatic Monthly Email Reminder**
+- 💌 **Beautiful HTML-formatted email** (affirmations + emojis)
+- 📋 **Recurring payments list from JSON**
+- 💳 **Due dates + notes + monthly totals**
+- 🔐 **Secure credential handling via env file**
+- 🧠 **Script loads files relative to itself** (safe for Task Scheduler)
+- 🖥️ Can be extended into a **Windows GUI or cloud service**
 
-📋 Recurring payments list from JSON
+---
 
-💳 Due dates + notes + monthly totals
+## 📂 Project Structure
 
-🔐 Secure credential handling via env file
-
-🧠 Script loads files relative to itself (safe for Task Scheduler)
-
-🖥️ Can be extended into a Windows GUI or cloud service
-
-📂 Project Structure
+```text
 Recurring-Payments-Reminder/
 │
 ├── reminder.py         # Main Python script (email builder + sender)
@@ -36,8 +36,9 @@ Recurring-Payments-Reminder/
 ├── config.env          # Email credentials (NOT tracked by Git)
 ├── .gitignore          # Ensures config.env is not committed
 └── README.md           # Documentation
-
 🧾 Example payments.json (Your Real Data)
+json
+Copy code
 [
   {
     "name": "Apple Storage",
@@ -75,36 +76,32 @@ Recurring-Payments-Reminder/
     "notes": "Subscription fee"
   }
 ]
-
 🔐 Configuration — config.env
-
 Create a file named config.env:
 
+text
+Copy code
 EMAIL_ADDRESS=your_email@gmail.com
 EMAIL_PASSWORD=your_gmail_app_password
 TO_EMAIL=your_email@gmail.com
-
-
 ⚠️ Never commit this file.
 It is automatically ignored via .gitignore.
 
-To create a Gmail App Password:
-
+Creating a Gmail App Password
 Go to Google Account → Security
 
 Enable 2-Step Verification
 
-Create App Password → choose "Mail"
+Go to App Passwords → choose Mail
 
-Paste it in config.env
+Copy the generated App Password into config.env as EMAIL_PASSWORD
 
 ▶️ Run the Script Manually
+Make sure you're inside your project folder, then run:
 
-Make sure you're inside your project folder, then:
-
+bash
+Copy code
 python reminder.py
-
-
 You should receive an HTML email with:
 
 ✨ Affirmations
@@ -116,32 +113,30 @@ You should receive an HTML email with:
 🎨 Emojis
 
 🖥️ Automating with Windows Task Scheduler
-
 Open Task Scheduler
 
 Create Basic Task → Trigger: Monthly
 
-Program/script:
+Set Program/script to:
 
+text
+Copy code
 "C:\Path\To\Python\python.exe"
+Set Add arguments to:
 
-
-Add arguments:
-
+text
+Copy code
 "C:\Path\To\Recurring-Payments-Reminder\reminder.py"
-
-
 Start in: (leave empty)
 
 Save → Right-click task → Run
 
 Check your email 🎉
 
-Script works from Task Scheduler because it loads files relative to its own directory using __file__.
+The script works from Task Scheduler because it loads files relative to its own directory using __file__.
 
 🔧 How It Works (Technical Overview)
-
-Email formatting done using HTML + inline CSS
+Email formatting is done using HTML + inline CSS
 
 Script pulls payments from payments.json
 
@@ -151,15 +146,14 @@ Calculates total outgoing
 
 Sends email using Gmail SMTP (smtplib + SSL)
 
-File paths resolved via:
+File paths are resolved via:
 
+python
+Copy code
 base_dir = os.path.dirname(os.path.abspath(__file__))
-
-
-so Task Scheduler can’t break it.
+so Task Scheduler can’t break it by changing the working directory.
 
 🚀 Future Enhancements
-
 🪟 Full Windows Desktop App (Tkinter / PyQt)
 
 ☁️ Cloud Scheduler (Google/AWS) — run even when PC is off
