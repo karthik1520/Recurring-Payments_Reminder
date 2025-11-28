@@ -3,8 +3,18 @@ import smtplib
 import ssl
 import os
 from datetime import datetime
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
+from email.mime_text import MIMEText
+from email.mime_multipart import MIMEMultipart
+
+# ----- Configuration -----
+# Sort mode: "day" (sort by due date) or "amount_desc" (largest amount first)
+SORT_MODE = "day"  # change to "amount_desc" if you want to sort by amount
+
+# High-value highlighting config
+HIGH_VALUE_THRESHOLD = 100  # EUR
+HIGH_VALUE_KEYWORDS = ["rent", "loan", "mortgage"]
+# -------------------------
+
 
 # 1. Load environment variables from config.env (next to this script)
 def load_config(filename="config.env"):
@@ -37,10 +47,22 @@ def load_payments(filename="payments.json"):
     with open(full_path, "r") as f:
         return json.load(f)
 
+
 # 3. Filter payments by month start (for now, just return all)
 def get_monthly_payments(payments):
     # In future, you can filter by date range (e.g., only payments within first 10 days).
     return payments
+
+
+# 3.5. Sort payments (by due date or amount)
+def sort_payments(payments):
+    if SORT_MODE == "amount_desc":
+        # Largest amount first
+        return sorted(payments, key=lambda p: float(p["amount"]), reverse=True)
+    else:
+        # Default: sort by due day (1–31)
+        return sorted(payments, key=lambda p: int(p["day"]))
+
 
 # 4. Build the email body text
 def build_email_body(payments):
@@ -91,8 +113,23 @@ def build_email_body(payments):
 
         total += amount
 
+        # --- High value detection ---
+        name_lower = name.lower()
+        is_high_value = (
+            amount >= HIGH_VALUE_THRESHOLD
+            or any(keyword in name_lower for keyword in HIGH_VALUE_KEYWORDS)
+        )
+
+        # Choose icon & style
+        if is_high_value:
+            icon = "🔥"  # high-importance payment
+            li_style = "margin-bottom: 10px; font-weight: bold; color: #b22222;"
+        else:
+            icon = "💳"
+            li_style = "margin-bottom: 10px;"
+
         # Build each bullet point with a little gap (margin-bottom)
-        line = f"💳 <strong>{name}</strong> – {amount:.2f}"
+        line = f"{icon} <strong>{name}</strong> – {amount:.2f}"
         if currency:
             line += f" {currency}"
         line += f" – due on day <strong>{day}</strong>"
@@ -101,7 +138,7 @@ def build_email_body(payments):
             line += f" <em>({notes})</em>"
 
         parts.append(f"""
-          <li style="margin-bottom: 10px;">
+          <li style="{li_style}">
             {line}
           </li>
         """)
@@ -138,7 +175,6 @@ def build_email_body(payments):
     return "".join(parts)
 
 
-
 # 5. Send the email using Gmail SMTP
 def send_email(config, subject, body):
     email_address = config["EMAIL_ADDRESS"]
@@ -162,6 +198,7 @@ def send_email(config, subject, body):
         server.login(email_address, email_password)
         server.send_message(msg)
 
+
 # 6. Main function that ties everything together
 def main():
     # Get current date info
@@ -176,6 +213,9 @@ def main():
     # Decide which payments to include (for now: all)
     monthly_payments = get_monthly_payments(payments)
 
+    # Sort payments nicely
+    monthly_payments = sort_payments(monthly_payments)
+
     # Build email content
     subject = f"Monthly Payments Reminder – {month_name} {year}"
     body = build_email_body(monthly_payments)
@@ -183,6 +223,7 @@ def main():
     # Send the email
     send_email(config, subject, body)
     print("Reminder email sent!")
+
 
 if __name__ == "__main__":
     main()
