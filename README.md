@@ -81,10 +81,11 @@ Recurring-Payments-Reminder/
 ## 🔐 Configuration — config.env
 
 Create a file named config.env:
-EMAIL_ADDRESS=your_email@gmail.com
-EMAIL_PASSWORD=your_gmail_app_password
-TO_EMAIL=your_email@gmail.com
-**⚠️ Never commit this file.**
+- EMAIL_ADDRESS=your_email@gmail.com
+- EMAIL_PASSWORD=your_gmail_app_password
+- TO_EMAIL=your_email@gmail.com
+
+- **⚠️ Never commit this file.**
 It is automatically ignored via .gitignore.
 
 Creating a Gmail App Password
